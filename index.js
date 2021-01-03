@@ -5,19 +5,21 @@ const port = 5000
 const { User } = require("./models/Users");
 const bodyParser = require('body-parser');
 
+const config = require('./config/key')
+
 //application/x--www-from-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 //application/json
 app.use(bodyParser.json());
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://unib35:whdalsdl0178@nodereact.sddit.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect('config.mongoURI', {
 	useNewUrlParser : true, useUnifiedTopology : true, useCreateIndex : true, useFindAndModify : false
 }).then(() => console.log('MongoDB Connect!!!'))
 .catch(err => console.log(err))
 
 
-app.get('/', (req, res) => {res.send('서버 상태 : 양호')})
+app.get('/', (req, res) => {res.send('서버 상태 : 양호  안녕하세요 저는 Lee 입니다.')})
 
 app.post('/register', (req, res) => {
 	
