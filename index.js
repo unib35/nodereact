@@ -4,6 +4,7 @@ const port = 5000
 const { User } = require("./models/Users");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { auth } = require('./middleware/auth');
 
 const config = require('./config/key')
 
@@ -22,7 +23,7 @@ mongoose.connect(config.mongoURI, {
 
 app.get('/', (req, res) => {res.send('서버 상태 : 양호')})
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
 	
 	//회원가입 할 때 필요한 정보들을 client에서 가져오면
 	//그것들을 datebase에 넣어준다.
@@ -67,6 +68,25 @@ app.post('/login', (req, res) => {
 	})
 })
 	
+
+
+app.get('/api/users/auth', auth, (req,res) => {
+	//여기까지 미들웨어를 통과해 왔다는 얘기는 Authentication이 True 라는 말.
+	res.status(200).json({
+		_id: req.user._id,
+		isAdmin: req.user.role === 0 ? false : true,
+		//role = 0 -> 일반유저, role != 0 -> 어드민 
+		isAuth: true,
+		email: req.user.email,
+		name: req.userm.name,
+		lastname: req.user.lastname,
+		role: req.user.role,
+		image: req.user.image
+	})
+	
+	
+})
+
 
 
 
