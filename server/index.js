@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 5000
+
 const { User } = require("./models/User");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -22,6 +22,10 @@ mongoose.connect(config.mongoURI, {
 
 
 app.get('/', (req, res) => {res.send('서버 상태 : 양호')})
+
+app.get('/api/hello', (req,res) => {
+	res.send("안녕하세요!!");
+})
 
 app.post('/api/users/register', (req, res) => {
 	
@@ -86,7 +90,6 @@ app.get('/api/users/auth', auth, (req,res) => {
 })
 
 app.get('/api/users/logout', auth, (req, res) => {
-	console.log("logoutfunction")
 	User.findOneAndUpdate({ _id: req.user._id}, 
 	{ token: "" }
 	,(err, user) => {
@@ -97,6 +100,8 @@ app.get('/api/users/logout', auth, (req, res) => {
 	})
 })
 
+
+const port = 5000
 
 app.listen(port, () => {
   console.log(`Example app listening at https://nodeandreact.run.goorm.io with the port number: ${port}`)
