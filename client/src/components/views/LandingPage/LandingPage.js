@@ -7,9 +7,13 @@ function LandingPage() {
 		axios.get('/api/hello')
 		.then(response => console.log("response.data"))
 	}, [])
+	
 	return (
-		<div>
-			LandingPage - 랜딩페이지
+		<div style={{
+			display : 'flex', justifyContnet: 'center', alignItems: 
+			'center', width: '100%', height: '100vh'
+			}}>
+			<h2>[Frontend] 시작 페이지</h2>
 		</div>
 	)
 }
